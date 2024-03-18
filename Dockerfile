@@ -1,6 +1,6 @@
 FROM python:3
 
-WORKDIR /Users/julsajul/Downloads/llama2
+WORKDIR /raid/jtuskaeva
 
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt

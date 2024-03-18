@@ -2,6 +2,8 @@
 import os
 import torch
 from datasets import load_dataset
+import pandas as pd
+from datasets import Dataset
 from transformers import (
     AutoModelForCausalLM,
     AutoTokenizer,
@@ -17,8 +19,10 @@ from trl import SFTTrainer
 base_model = "NousResearch/Llama-2-7b-chat-hf"
 
 # New instruction dataset
-guanaco_dataset = "mlabonne/guanaco-llama2-1k"
-dataset = load_dataset(guanaco_dataset, split="train")
+df = pd.read_csv("convertcsv.csv")
+
+# Convert the pandas DataFrame to a datasets Dataset
+dataset = Dataset.from_pandas(df)
 
 # Fine-tuned model
 new_model = "llama-2-7b-chat-guanaco"
@@ -146,7 +150,7 @@ model.config.pretraining_tp = 1
 # Load LLaMA tokenizer
 tokenizer = AutoTokenizer.from_pretrained(base_model, trust_remote_code=True)
 tokenizer.pad_token = tokenizer.eos_token
-tokenizer.padding_side = "right" # Fix weird overflow issue with fp16 training
+tokenizer.padding_side = "right"  # Fix weird overflow issue with fp16 training
 
 # Load LoRA configuration
 peft_config = LoraConfig(
@@ -189,9 +193,10 @@ trainer = SFTTrainer(
     args=training_arguments,
     packing=packing,
 )
-
+"""
 # Train model
 trainer.train()
 
 # Save trained model
 trainer.model.save_pretrained(new_model)
+"""
