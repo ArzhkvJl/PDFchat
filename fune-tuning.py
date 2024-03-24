@@ -19,13 +19,13 @@ from trl import SFTTrainer
 base_model = "NousResearch/Llama-2-7b-chat-hf"
 
 # New instruction dataset
-df = pd.read_csv("convertcsv.csv")
+df = pd.read_csv("channel_messages.csv")
 
 # Convert the pandas DataFrame to a datasets Dataset
 dataset = Dataset.from_pandas(df)
 
 # Fine-tuned model
-new_model = "llama-2-7b-chat-guanaco"
+new_model = "llama-2-7b-chat-lu"
 
 # QLoRA parameters
 
