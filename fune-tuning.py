@@ -14,6 +14,8 @@ from transformers import (
 )
 from peft import LoraConfig
 from trl import SFTTrainer
+import bitsandbytes
+
 
 # Model from Hugging Face hub
 base_model = "NousResearch/Llama-2-7b-chat-hf"
